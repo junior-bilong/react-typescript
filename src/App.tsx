@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FunctionComponent } from 'react';
+import PokemonList from "./pages/pokemon-list";
+import PokemonsDetail from './pages/pokemon-detail';
+import {BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import PageNotFound from './pages/page-not-found';
+import PokemonEdit from './pages/pokemon-edit';
+import PokemonAdd from './pages/pokemon-add';
 
-function App() {
+const APP: FunctionComponent = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <div>
+        {/* {la barre de navigation commun a toutes les pages } */}
+        <nav>
+          <div className="nav-wrapper teal">
+            <Link to='/' className='brand-logo center'>
+              Pokedex
+            </Link>
+          </div>
+        </nav>
+        {/* {le systeme de gestion des routes de notre application } */}
+        <Switch>
+          <Route exact path='/' component={PokemonList}/>
+          <Route exact path ='/pokemons' component={PokemonList}/>
+          <Route exact path="/pokemon/add" component={PokemonAdd}/>
+          <Route exact path="/pokemons/edit/:id" component={PokemonEdit}  />
+          <Route path ='/pokemons/:id' component={PokemonsDetail}/>
+          <Route component={PageNotFound}/>
+        </Switch>
+      </div>
+    </Router>
+
+  )
 }
 
-export default App;
+export default APP;
